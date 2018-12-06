@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% block home %}
+
+
+    {% load staticfiles %}
+    <h1 style="font-size: 0px; margin: 0px;" class="myHidden">{{ user.pk }}</h1>
+    <div class="container">
+        <div class="row">
+            <div class="card col col-lg-2">
+                <img class="card-img-top" src="{{ user.image.url }}" alt="Card image cap">
+                <div class="card-body">
+                    <h4 class="card-title">{{ user.name }}</h4>
+                    <p class="card-text">{{ user.position }}</p>
+                    <p class="card-text">General:
+                        {% if user.parent %}
+                            <a class="text-dark" href="/{{ user.parent.pk }}-general/">{{ user.parent }}</a>
+                        {% else %}
+                            haven't
+                        {% endif %}
+                    </p>
+                <div class="btn-group">
+                    <a class="btn btn-dark" href="/add/{{ user.id }}">add</a>
+                    <a id="getid" data-id="{{ user.id }}" href="/{{ user.id }}/change/" class="btn btn-dark">change</a>
+                </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <table id="myTable" class="table">
+                    <thead class="thead-dark">
+                    <tr class="header">
+                        <th onclick="sortTable(0)">name</th>
+                        <th onclick="sortTable(1)">image</th>
+                        <th onclick="sortTable(2)">position</th>
+                        <th onclick="sortTable(3)">salary</th>
+                    </tr>
+                    </thead>
+                    {% for user_i in user_children %}
+                        <tr>
+                            <td><a href="/{{ user_i.id }}-general" class="text-dark">{{ user_i.name }}</a></td>
+                            <td><a href="/{{ user_i.id }}-general"><img src="{{ user_i.image.url }}" width="100"
+                                                                        height="111"></a></td>
+                            <td>{{ user_i.position }}</td>
+                            <td>{{ user_i.salary }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="pagination ">
+    <span class="step-links">
+        <span class="current">
+            <h6 style="text-align: center;">Page <span
+                    class="badge badge-light">{{ user_children.number }}</span> of <span
+                    class="badge badge-light">{{ user_children.paginator.num_pages }}</span>.</h6>
+        </span>
+        {% if user_children.has_previous %}
+            <a class="btn btn-dark btn-sm" role="button" href="?page={{ user_children.first }}">&laquo; first</a>
+            <a class="btn btn-dark btn-sm" role="button" href="?page={{ user_children.previous_page_number }}">prev</a>
+
+
+        {% endif %}
+
+        {% if user_children.has_next %}
+
+            <a class="btn btn-dark btn-sm" role="button" href="?page={{ user_children.next_page_number }}">next</a>
+            <a class="btn btn-dark btn-sm" role="button" href="?page={{ user_children.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+    </div>
+
+    <script>
+        function myFunction() {
+            var v = document.getElementById("getid").getAttribute('data-id');
+            var url = "/"+v+"-general";
+            console.log(1);
+            $.ajax({
+                type: "GET",
+                url: url,
+                data:
+                    {
+                        'name': document.getElementById("myInput").value,
+                        'user_id': document.getElementById("getid").getAttribute('data-id')
+                    },
+                success: function (data) {
+                    $('#myTable').html(data);
+                }
+            });
+        }
+
+        function myFunction1() {
+            var v = document.getElementById("getid").getAttribute('data-id');
+            var url = "/"+v+"-general";
+            console.log(2);
+            $.ajax({
+                type: "GET",
+                url: url,
+                data:
+                    {
+
+                        'position': document.getElementById("myInputPosition").value,
+                        'user_id': document.getElementById("getid").getAttribute('data-id')
+
+                    },
+                success: function (data) {
+                    $('#myTable').html(data);
+                }
+            });
+        }
+
+        function myFunction2() {
+            var v = document.getElementById("getid").getAttribute('data-id');
+            var url = "/"+v+"-general";
+            console.log(3);
+            $.ajax({
+                type: "GET",
+                url: url,
+                data:
+                    {
+
+                        'salary': document.getElementById("myInputPrice").value,
+                        'user_id': document.getElementById("getid").getAttribute('data-id')
+                    },
+                success: function (data) {
+                    $('#myTable').html(data);
+                }
+            });
+        }
+
+    </script>
+{% endblock %}

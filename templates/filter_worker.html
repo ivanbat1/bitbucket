@@ -1,0 +1,23 @@
+{% block home %}
+    <div id="divappend" class="container infinite-container">
+    <table id="myTable" class="table">
+        <thead class="thead-dark">
+        <tr class="header">
+            <th onclick="sortTable(0)">name</th>
+            <th onclick="sortTable(1)">image</th>
+            <th onclick="sortTable(2)">position</th>
+            <th onclick="sortTable(3)">salary</th>
+        </tr>
+        </thead>
+        {% for user_i in user_children %}
+            <tr>
+                <td><a href="/{{ user_i.id }}-general" class="text-dark">{{ user_i.name }}</a></td>
+                <td><a href="/{{ user_i.id }}-general"><img src="{{ user_i.image.url }}" width="100"
+                                                            height="111"></a></td>
+                <td>{{ user_i.position }}</td>
+                <td>{{ user_i.salary }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    </div>
+{% endblock %}

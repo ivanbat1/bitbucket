@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block home %}
+    <script>
+        function myFunction2() {
+            var v = document.getElementById("id_user").getAttribute('data-id');
+            var url = "/" + v + "/change";
+            $.ajax({
+                type: "GET",
+                url: url,
+                data:
+                    {
+                        'parent': document.getElementById("name_general").value
+                    },
+                success: function (data) {
+                    console.log(data.count);
+                        alert(data.info)
+                }
+            });
+        }
+    </script>
+    {% if username %}
+        <h1 id="id_user" data-id="{{ a.pk }}" style="text-align:center ">Change Worker {{ a.name }}</h1>
+        <div class="row h-75 justify-content-center align-items-center">
+            <form method="post" id="add-new-book" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    {{ form.name }}
+                </div>
+                <div class="form-group">
+                    <label for="text">position:</label>
+                    {{ form.position }}
+                </div>
+                <div class="form-group">
+                    <label for="text">salary:</label>
+                    {{ form.salary }}
+                </div>
+
+                <div class="form-group">
+                    <label for="sel1">Select General:</label>
+                    <input id="name_general" type="text" name="parent">
+                    <input onclick="myFunction2()" value="Check" type="button">
+                    <h6>example: "Baturin I.V id 12". If you not input data general not change but if you want delete general input "None"</h6>
+                </div>
+                <div class="custom-file mb-3">
+
+                    {{ form.image }}
+                </div>
+                <button type="submit" class="btn btn-dark">Submit</button>
+            </form>
+        </div>
+    {% else %}
+        <h1 style="text-align:center ">Please signup or login</h1>
+    {% endif %}
+{% endblock %}
