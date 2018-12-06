@@ -32,8 +32,8 @@ ALLOWED_HOSTS = []
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST      = 'smtp.gmail.com'
 EMAIL_PORT      = 587
-EMAIL_HOST_USER = 'baturin.ivan9@gmail.com'
-EMAIL_HOST_PASSWORD = 'Ivanbaturin1999'
+EMAIL_HOST_USER = 'you_mail@gmail.com'
+EMAIL_HOST_PASSWORD = 'password'
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'Server <server@whatever.com>'
 
@@ -88,8 +88,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'test',
-        'USER' : 'postgres',
-        'PASSWORD' : 'ivan',
+        'USER' : 'USER_NAME',
+        'PASSWORD' : 'PASSWORD',
         'HOST' : 'localhost',
         'PORT' : '5432',
     }
